@@ -1,4 +1,4 @@
-package Babyak.babyak_backend.User.entity;
+package Babyak.babyak_backend.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,15 +19,15 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(nullable = false)
+    private String nickname;
+
     @OneToOne
     @JoinColumn(name = "major_id")
     private Major majorId;
 
     @Column(name = "student_id", nullable = false)
     private Long studentId;
-
-    @Column(nullable = false)
-    private String nickname;
 
     @Column(name = "no_shows", nullable = false)
     private int noShows;

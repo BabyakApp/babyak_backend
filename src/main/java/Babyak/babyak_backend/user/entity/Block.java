@@ -1,4 +1,4 @@
-package Babyak.babyak_backend.User.entity;
+package Babyak.babyak_backend.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
