@@ -1,6 +1,7 @@
 package Babyak.babyak_backend.oauth.controller;
 
 import Babyak.babyak_backend.oauth.service.OauthService;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,6 @@ public class OauthController {
     public String googleRedirect(
             @RequestParam(name = "code") String code) {
         log.info("구글 로그인 API 서버로부터 받은 code: " + code);
-        return oauthService.requestAccessToken(code);
+        return oauthService.getUserInfo(code);
     }
 }

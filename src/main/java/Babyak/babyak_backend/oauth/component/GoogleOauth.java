@@ -1,5 +1,6 @@
 package Babyak.babyak_backend.oauth.component;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class GoogleOauth {
         return GOOGLE_BASE_URL + "?" + parameterStr;
     }
 
-    public String requestAccessToken(String code) {
+    public JsonNode requestAccessToken(String code) {
         RestTemplate restTemplate = new RestTemplate();
 
         Map<String, Object> params = new HashMap<>();
@@ -54,15 +55,16 @@ public class GoogleOauth {
         params.put("redirect_uri", GOOGLE_REDIRECT_URI);
         params.put("grant_type", "authorization_code");
 
-        ResponseEntity<String> responseEntity
-                = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, params, String.class);
+        ResponseEntity<JsonNode> responseEntity
+                = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, params, JsonNode.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();
         }
 
-        return "구글 로그인 요청 처리 실패";
+        return null;
     }
+
 
     public String getScopeURL() {
         return GOOGLE_SCOPE.replaceAll(",", "%20");
