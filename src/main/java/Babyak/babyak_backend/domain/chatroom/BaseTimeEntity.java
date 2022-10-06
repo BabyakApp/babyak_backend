@@ -1,4 +1,4 @@
-package Babyak.babyak_backend.domain.posts;
+package Babyak.babyak_backend.domain.chatroom;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
