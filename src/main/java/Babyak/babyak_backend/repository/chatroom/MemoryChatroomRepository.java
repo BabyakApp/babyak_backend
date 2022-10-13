@@ -1,6 +1,8 @@
-package Babyak.babyak_backend.domain.chatroom;
+package Babyak.babyak_backend.repository.chatroom;
 
-import Babyak.babyak_backend.User.entity.User;
+import Babyak.babyak_backend.domain.chatroom.ChatRoom;
+import Babyak.babyak_backend.repository.chatroom.ChatroomRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,35 +11,25 @@ import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
-@Repository
-public class MemoryChatroomRepository implements ChatroomRepository{
+
+public class MemoryChatroomRepository implements ChatroomRepository {
     private static Map<Long, ChatRoom> store = new HashMap<>();
+    private static long sequence = 0L;
 
-
-    @Override
-    public Map<Integer, Timestamp> userLastvisited() {
-        return null;
-    }
-
-    @Override
-    public List<User> memberlist() {
-        return null;
-    }
 
     @Override
     public <S extends ChatRoom> S save(S entity) {
-        return null;
+        entity.setChatroomid(++sequence);
+        store.put(entity.getChatroomid(), entity);
+        return entity;
     }
 
     @Override
     public List<ChatRoom> findAll() {
-        return null;
+        return new ArrayList<>(store.values());
     }
 
     @Override
@@ -57,7 +49,7 @@ public class MemoryChatroomRepository implements ChatroomRepository{
 
     @Override
     public void deleteAll() {
-
+        store.clear();
     }
 
     @Override
@@ -91,8 +83,8 @@ public class MemoryChatroomRepository implements ChatroomRepository{
     }
 
     @Override
-    public Optional<ChatRoom> findById(Long aLong) {
-        return Optional.empty();
+    public Optional<ChatRoom> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
     }
 
     @Override

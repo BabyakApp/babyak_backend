@@ -18,7 +18,7 @@ public class ChatRoomController {
     }
 
 
-    @GetMapping("posting")
+    @GetMapping("/posting")
     @ResponseBody
     public ChatRoomForm posting(
             @RequestParam("chatTitle") String title,
