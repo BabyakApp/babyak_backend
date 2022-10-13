@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequest {
+public class NoShowResponse {
     private String email;
-    private String nickname;
-    private String departure;
-    private String major;
-    private Long studentId;
+    private int noShow;
+    private Boolean isBlocked;
 }

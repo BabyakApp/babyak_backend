@@ -37,6 +37,19 @@ public class OauthController {
         }
         else {
             log.info("ewhain.net 계정으로 로그인 되었습니다.");
+            if (googleLoginResponse.getIsRegistered()) {
+                if (googleLoginResponse.getIsBlocked()) {
+                    log.info("차단된 계정입니다.");
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(googleLoginResponse);
+                }
+                else {
+                    log.info("이미 가입한 회원입니다.");
+                }
+
+            }
+            else {
+                log.info("가입하지 않은 회원입니다.");
+            }
             return ResponseEntity.status(HttpStatus.OK).body(googleLoginResponse);
         }
     }

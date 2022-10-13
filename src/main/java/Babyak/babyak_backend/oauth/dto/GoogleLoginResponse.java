@@ -10,6 +10,8 @@ public class GoogleLoginResponse {
 
     private String email;
     private Boolean isEwha;
+    private Boolean isRegistered;
+    private Boolean isBlocked;
 
     /*
     private String accessToken; // 어플리케이션이 Google Login API 요청 승인을 위해 보내는 토큰

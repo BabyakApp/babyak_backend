@@ -64,7 +64,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/**").permitAll() // test용 -> 개발 다 하고 바꿔야됨
+                //.antMatchers("/oauth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .headers()
