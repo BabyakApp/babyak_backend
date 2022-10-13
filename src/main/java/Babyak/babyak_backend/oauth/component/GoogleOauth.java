@@ -50,7 +50,7 @@ public class GoogleOauth {
 
         Map<String, Object> params = new HashMap<>();
         params.put("code", code);
-        System.out.println("code: " + code);
+        //System.out.println("code: " + code);
         params.put("client_id", GOOGLE_CLIENT_ID);
         params.put("client_secret", GOOGLE_CLIENT_SECRET);
         params.put("redirect_uri", GOOGLE_REDIRECT_URI);

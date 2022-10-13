@@ -1,0 +1,1 @@
+INSERT INTO major(departure, major) SELECT * FROM CSVREAD('/Users/hansua/Babyak/ewha_majorlist.csv');

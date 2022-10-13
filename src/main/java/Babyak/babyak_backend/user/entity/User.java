@@ -24,7 +24,7 @@ public class User {
 
     @OneToOne
     @JoinColumn(name = "major_id")
-    private Major majorId;
+    private Major major;
 
     @Column(name = "student_id", nullable = false)
     private Long studentId;

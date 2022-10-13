@@ -86,6 +86,8 @@ public class OauthService {
                    .isEwha(true)
                    .build();
        }
+
+       // + 가입 여부도 반환
    }
 
 

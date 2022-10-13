@@ -21,7 +21,6 @@ public class OauthController {
     /* GOOGLE 로그인 */
     @GetMapping("/google")
     public ResponseEntity<Void> googleLogin() {
-        System.out.println("login");
         oauthService.request();
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
@@ -29,7 +28,7 @@ public class OauthController {
     @GetMapping(value = "/google/redirect")
     public ResponseEntity<GoogleLoginResponse> googleRedirect(
             @RequestParam(name = "code") String code) {
-        log.info("구글 로그인 API 서버로부터 받은 code: " + code);
+        //log.info("구글 로그인 API 서버로부터 받은 code: " + code);
         GoogleLoginResponse googleLoginResponse = oauthService.getUserEmail(code);
 
         if (googleLoginResponse.getIsEwha() == false) {
