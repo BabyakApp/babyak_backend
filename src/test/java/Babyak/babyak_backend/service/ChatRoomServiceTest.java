@@ -30,12 +30,12 @@ public class ChatRoomServiceTest {
     public void 채팅방_생성_메모리() throws Exception {
         //Given
         ChatRoom ch = new ChatRoom();
-        ch.setName("hello");
+        ch.setChatTitle("hello");
         //When
         Long saveId = chatroomservice.post(ch);
         //Then
         ChatRoom findMember = chatroomrepository.findById(saveId).get();
-        assertEquals(ch.getName(), findMember.getName());
+        assertEquals(ch.getChatTitle(), findMember.getChatTitle());
     }
 
 }

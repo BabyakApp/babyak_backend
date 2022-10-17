@@ -17,7 +17,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatRoom extends BaseTimeEntity {
+public class ChatRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +38,7 @@ public class ChatRoom extends BaseTimeEntity {
     private String location;
     @Column(nullable = false)
     private String content;
+
 
 
 }
