@@ -1,6 +1,8 @@
-package Babyak.babyak_backend.repository.chatroom;
+package Babyak.babyak_backend.chatroom.repository;
 
-import Babyak.babyak_backend.domain.chatroom.ChatRoom;
+import Babyak.babyak_backend.chatroom.domain.ChatRoom;
+import Babyak.babyak_backend.chatroom.dto.ChatRoomDto;
+import Babyak.babyak_backend.chatroom.dto.FilterDto;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -18,27 +20,16 @@ import java.util.function.Function;
 public class JpaChatroomRepository implements ChatroomRepository {
 
     private final EntityManager em;
+    private int temp;
 
     public JpaChatroomRepository(EntityManager em){
         this.em = em;
     }
 
-//    @Override
-//    public Map<Integer, Timestamp> userLastvisited() {
-//        Timestamp ts = new Timestamp(99L);
-//        HashMap<Integer, Timestamp> map = new HashMap<>();
-//        map.put(9, ts);
-//        return map;
-//    }
-
-//    @Override
-//    public List<Integer> memberlist() {
-//        return null;
-//    }
 
     @Override
     public List<ChatRoom> findAll() {
-        return em.createQuery("select m from ChatRoom m", ChatRoom.class)
+        return em.createQuery("select ch from ChatRoom ch", ChatRoom.class)
                 .getResultList();
     }
 

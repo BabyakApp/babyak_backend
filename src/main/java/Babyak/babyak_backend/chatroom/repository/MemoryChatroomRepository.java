@@ -1,16 +1,14 @@
-package Babyak.babyak_backend.repository.chatroom;
+package Babyak.babyak_backend.chatroom.repository;
 
-import Babyak.babyak_backend.domain.chatroom.ChatRoom;
-import Babyak.babyak_backend.repository.chatroom.ChatroomRepository;
-import org.springframework.context.annotation.Primary;
+import Babyak.babyak_backend.chatroom.domain.ChatRoom;
+import Babyak.babyak_backend.chatroom.dto.ChatRoomDto;
+import Babyak.babyak_backend.chatroom.dto.FilterDto;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.function.Function;
 
@@ -171,4 +169,5 @@ public class MemoryChatroomRepository implements ChatroomRepository {
     public <S extends ChatRoom, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
+
 }

@@ -1,11 +1,10 @@
-package Babyak.babyak_backend.service.chatroom;
+package Babyak.babyak_backend.chatroom.service;
 
 
-import Babyak.babyak_backend.domain.chatroom.ChatRoom;
-import Babyak.babyak_backend.repository.chatroom.ChatroomRepository;
-import Babyak.babyak_backend.repository.chatroom.MemoryChatroomRepository;
+import Babyak.babyak_backend.chatroom.domain.ChatRoom;
+import Babyak.babyak_backend.chatroom.dto.FilterDto;
+import Babyak.babyak_backend.chatroom.repository.ChatroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,10 +31,11 @@ public class ChatRoomService {
     }
 
     /*
-    * 전체 채팅방 조회
+    * 전체 채팅방 목록 반환
     * */
     public List<ChatRoom> findAllChatRooms(){
         return chatroomrepository.findAll();
     }
+
 
 }
