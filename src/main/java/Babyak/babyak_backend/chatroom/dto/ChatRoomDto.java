@@ -19,7 +19,6 @@ public class ChatRoomDto {
     private String food;
     private String location;
     private String content;
-    private Long userid;
 
     public ChatRoom toEntity(){
         ChatRoom chatRoom = ChatRoom.builder()
