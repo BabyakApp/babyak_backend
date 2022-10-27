@@ -1,6 +1,7 @@
 package Babyak.babyak_backend.domain.chatroom;
 
-import Babyak.babyak_backend.repository.chatroom.MemoryChatroomRepository;
+import Babyak.babyak_backend.chatroom.domain.ChatRoom;
+import Babyak.babyak_backend.chatroom.repository.MemoryChatroomRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

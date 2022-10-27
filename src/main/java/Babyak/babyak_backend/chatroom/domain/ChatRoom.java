@@ -1,4 +1,4 @@
-package Babyak.babyak_backend.domain.chatroom;
+package Babyak.babyak_backend.chatroom.domain;
 
 import Babyak.babyak_backend.user.entity.User;
 import lombok.*;
@@ -23,6 +23,10 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "chatroom_id", nullable = false)
     private Long chatroomid;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column()
     private Timestamp lastChat;

@@ -1,4 +1,4 @@
-package Babyak.babyak_backend.domain.chat;
+package Babyak.babyak_backend.chat.domain;
 
 import lombok.Getter;
 

@@ -1,16 +1,13 @@
-package Babyak.babyak_backend.domain.chatroom;
+package Babyak.babyak_backend.chatroom.domain;
 
 
+import Babyak.babyak_backend.chatroom.domain.ChatRoom;
 import Babyak.babyak_backend.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
