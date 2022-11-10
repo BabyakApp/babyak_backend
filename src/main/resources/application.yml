@@ -11,5 +11,12 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+
   profiles:
     include: oauth
+
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 15672
