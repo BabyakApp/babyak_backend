@@ -12,7 +12,15 @@ import java.time.LocalDateTime;
 //@Data
 @Getter
 @Setter
+@NoArgsConstructor
+@Data
 public class ChatDto {
+
+    private Long chatRoomId; // 구독 채널 구분할 수 있는 식별자
+    private String writer;
+    private String message;
+
+    /*
     private Long id;
     private Long chatRoomId;
     private String writer;
@@ -21,4 +29,5 @@ public class ChatDto {
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime regDate;
+    */
 }
