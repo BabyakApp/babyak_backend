@@ -1,16 +1,9 @@
 package Babyak.babyak_backend.chat.controller;
 
-import Babyak.babyak_backend.chat.dto.ChatDto;
-import Babyak.babyak_backend.chat.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 //RestController
@@ -23,7 +16,7 @@ public class ChatRoomController {
 //    private final SimpMessagingTemplate template;
 //
 //    @MessageMapping
-//    public void sendMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor) {
+//    public void sendMessage(ChatMessageDto chatDto, SimpMessageHeaderAccessor accessor) {
 //        template.convertAndSend("/sub/chat/" + chatDto.getChatRoomId(), chatDto);
 //    }
 //

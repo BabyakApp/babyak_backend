@@ -1,10 +1,6 @@
 package Babyak.babyak_backend.chat.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 //@Builder
 //@AllArgsConstructor
@@ -12,13 +8,17 @@ import java.time.LocalDateTime;
 //@Data
 @Getter
 @Setter
-@NoArgsConstructor
-@Data
-public class ChatDto {
+public class ChatMessageDto {
 
-    private Long chatRoomId; // 구독 채널 구분할 수 있는 식별자
-    private String writer;
-    private String message;
+    public enum MessageType {
+        // ENTER: 채팅방 입장
+        // TALK: 대화하기
+        ENTER, TALK;
+    }
+    private MessageType type; // 메세지 타입
+    private String roomId; // 채팅방 번호
+    private String sender; // 메세지 보낸 사람
+    private String message; // 메세
 
     /*
     private Long id;

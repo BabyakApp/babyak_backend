@@ -1,5 +1,7 @@
 package Babyak.babyak_backend.chat.dto;
 
+import Babyak.babyak_backend.chat.service.ChatService;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,18 +13,27 @@ import java.util.UUID;
 
 //@Data
 @Getter
-@Setter
 public class ChatRoomDto {
+
     private String roomId;
-    private String roomTitle;
+    private String name; // 채팅방 이름
+    private Set<WebSocketSession> sessions = new HashSet<>(); // 입장한 client들의 정보를 갖고 있어야 하므로
 
-    // WebSocketSession: Spring에서 Websocket Connection이 맺어진 세션
-    private Set<WebSocketSession> socketSessions = new HashSet<>();
+    @Builder
+    public ChatRoomDto(String roomId, String name) {
+        this.roomId = roomId;
+        this.name = name;
+    }
 
-    public static ChatRoomDto create(String roomTitle) {
-        ChatRoomDto room = new ChatRoomDto();
-        room.setRoomId(UUID.randomUUID().toString());
-        room.setRoomTitle(roomTitle);
-        return room;
+    public void handleActions (WebSocketSession session, ChatMessageDto chatMessage, ChatService chatService) {
+        if (chatMessage.getType().equals(ChatMessageDto.MessageType.ENTER)) {
+            sessions.add(session);
+            chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
+        }
+        sendMessage(chatMessage, chatService);
+    }
+
+    public <T> void sendMessage (T message, ChatService chatService) {
+        sessions.parallelStream().forEach(session -> chatService.sendMessage(session, message));
     }
 }
