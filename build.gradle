@@ -32,10 +32,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-	// thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+	implementation 'org.springframework.boot:spring-boot-devtools'
 
 	// m1
 	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
@@ -59,7 +57,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	// stomp
-	implementation 'org.webjars:stomp-websocket:2.3.4'
+	implementation 'org.webjars:stomp-websocket:2.3.4' // 안 되면 2.3.3-1로 변경
 
 	// netty
 	implementation 'org.springframework.boot:spring-boot-starter-reactor-netty:2.6.4'
@@ -67,11 +65,17 @@ dependencies {
 	// jackson
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
 
-	// sockjs
-	implementation 'org.webjars:sockjs-client:1.5.1'
-
 	// amqp (rabbitmq)
-	implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.4'
+	//implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.4'
+
+	// webjar: 채팅 웹 화면 구현하기 위해 필요한 js를 로드하기 위해
+	implementation 'org.webjars.bower:bootstrap:4.5.3' // 안 되면 4.3.1로 변경
+	implementation 'org.webjars.bower:vue:2.5.16'
+	implementation 'org.webjars.bower:axios:0.21.0' // 안 되면 0.17.1로 변경
+	implementation 'org.webjars:sockjs-client:1.1.2' // 최신 버전: 1.5.1
+
+	// gson
+	implementation 'com.google.code.gson:gson:2.8.9' // 안 되면 2.8.0으로 변경
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'

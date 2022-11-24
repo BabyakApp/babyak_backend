@@ -15,6 +15,14 @@ spring:
   profiles:
     include: oauth
 
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+
+
 #  rabbitmq:
 #    username: guest
 #    password: guest

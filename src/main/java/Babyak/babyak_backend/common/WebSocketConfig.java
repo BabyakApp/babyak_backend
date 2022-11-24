@@ -1,23 +1,37 @@
 package Babyak.babyak_backend.common;
 
-import Babyak.babyak_backend.chat.handler.WebSocketHandler;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocket
-@RequiredArgsConstructor
-public class WebSocketConfig implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final WebSocketHandler webSocketHandler;
+    //private final WebSocketHandler webSocketHandler;
 
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        // 메세지를 발생하는 요청의 prefix: /pub
+        config.enableSimpleBroker("/sub");
+        // 메세지를 구독하는 요청의 prefix: /sub
+        config.setApplicationDestinationPrefixes("/pub");
+    }
+
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        // stomp websocket의 연결 endpoint: /ws-stomp
+        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*")
+                .withSockJS();
+    }
+
+    /*
+    STOMP(X). 그냥 Server-Client의 WebSocket 구조
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*");
     }
+     */
 
     /*
     @Override

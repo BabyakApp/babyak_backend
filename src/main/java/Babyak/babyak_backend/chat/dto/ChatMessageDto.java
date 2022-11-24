@@ -13,7 +13,8 @@ public class ChatMessageDto {
     public enum MessageType {
         // ENTER: 채팅방 입장
         // TALK: 대화하기
-        ENTER, TALK;
+        //ENTER, TALK;
+        ENTER, TALK, JOIN;
     }
     private MessageType type; // 메세지 타입
     private String roomId; // 채팅방 번호
