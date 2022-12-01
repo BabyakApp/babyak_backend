@@ -1,8 +1,6 @@
 package Babyak.babyak_backend.user.controller;
 
-import Babyak.babyak_backend.user.dto.NoShowRequest;
-import Babyak.babyak_backend.user.dto.NoShowResponse;
-import Babyak.babyak_backend.user.dto.SignUpRequest;
+import Babyak.babyak_backend.user.dto.*;
 import Babyak.babyak_backend.user.repository.BlockQuerydslRepository;
 import Babyak.babyak_backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +32,22 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateNoShow(noShowRequest));
     }
 
+    /* 차단 확인 */
     @GetMapping("/blocked")
-    public void getBlockInfo(String email) {
+    public ResponseEntity<isBlockedResponse> getBlockInfo(@RequestBody isBlockedRequest isBlockedRequest) {
 
+        String email = isBlockedRequest.getEmail();
+        Boolean isBlocked = false;
         if (blockQuerydslRepository.findByEmail(email) == null) {
             log.info("차단된 유저가 아닙니다.");
+            isBlocked = false;
         }
         else {
             log.info("차단된 유저입니다.");
+            isBlocked = true;
         }
+
+        isBlockedResponse response = new isBlockedResponse(email, isBlocked);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
