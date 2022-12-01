@@ -3,7 +3,10 @@ package Babyak.babyak_backend.chat.controller;
 import Babyak.babyak_backend.chat.dto.ChatMessageDto;
 import Babyak.babyak_backend.chat.dto.ChatRoomDto;
 import Babyak.babyak_backend.chat.entity.ChatRoom;
+import Babyak.babyak_backend.chat.repository.ChatRoomRepository;
+import Babyak.babyak_backend.chat.repository.ChattingRoomRepository;
 import Babyak.babyak_backend.chat.service.ChatService;
+import Babyak.babyak_backend.common.service.RedisPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -28,13 +31,23 @@ public class ChatController {
      웹뷰에서 stomp 라이브러리 이용해 subscriber 주소 바라보고 있는 코드만 작성하면 된다
      */
 
+    private final RedisPublisher redisPublisher;
+    private final ChattingRoomRepository chattingRoomRepository;
     private final SimpMessageSendingOperations sendingOperations;
+
+    /**
+     * websocket "/pub/chat/message" 로 들어오는 메세징을 처리한다.
+     */
 
     @MessageMapping("/chat/message")
     public void message(ChatMessageDto message) {
-        if (ChatMessageDto.MessageType.JOIN.equals(message.getType()))
+        if (ChatMessageDto.MessageType.ENTER.equals(message.getType())) {
+            chattingRoomRepository.enterChatRoom(message.getRoomId());
             message.setMessage(message.getSender() + "님이 입장하셨습니다.");
-        sendingOperations.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        }
+        // Websocket에 발행된 메세지를 Redis로 발행한다(publish)
+        //sendingOperations.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        redisPublisher.publish(chattingRoomRepository.getTopic(message.getRoomId()),message);
     }
 
     /* 채팅방 생성 및 조회는 Rest API로 구현
