@@ -62,18 +62,21 @@ public class SecurityConfig {
 
         http
                 .authorizeRequests()
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/**").permitAll() // test용 -> 개발 다 하고 바꿔야됨
-                //.antMatchers("/oauth/**").permitAll()
-                .anyRequest().authenticated()
+                    .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                    .antMatchers(HttpMethod.OPTIONS).permitAll()
+                    .antMatchers("/**").permitAll() // test용 -> 개발 다 하고 바꿔야됨
+                    //.antMatchers("/oauth/**").permitAll()
+                    //.antMatchers("/chat/**").hasRole("USER") // chat으로 시작하는 리소스에 대한 접근 권한 설정
+                    .anyRequest().authenticated() // 나머지 리소스에 대한 접근 설정
                 .and()
                 .headers()
-                .frameOptions().sameOrigin()
+                    .frameOptions().sameOrigin() // SockJS는 기본적으로 HTML iframe 요소를 통한 전송을 허용하지 않도록 설정하는데 해당 내용 해제.
                 .and()
                 .cors()
                 .and()
-                .csrf().disable();
+                .formLogin() // 권한없이 페이지 접근하면 로그인 페이지로 이동
+                .and()
+                .csrf().disable(); // 기본값이 on인 csrf 취약점 보안 해제. on으로 설정해도 되나 설정할 경우 웹페이지에서 추가처리 필요.
 
         return http.build();
     }
@@ -92,4 +95,6 @@ public class SecurityConfig {
         return source;
 
     }
+
+
 }
