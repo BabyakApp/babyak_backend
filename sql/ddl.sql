@@ -1,1 +1,10 @@
-INSERT INTO major(departure, major) SELECT * FROM CSVREAD('/Users/hansua/Babyak/ewha_majorlist.csv');
+
+LOAD DATA INFILE 'ewha_major.csv'
+INTO TABLE MAJOR
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(@college, @departure)
+    set
+    college = @college,
+    departure = @departure;

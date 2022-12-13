@@ -2,8 +2,12 @@ package Babyak.babyak_backend.chat.controller;
 
 import Babyak.babyak_backend.chat.dto.ChatRoomDto;
 import Babyak.babyak_backend.chat.repository.ChattingRoomRepository;
+import Babyak.babyak_backend.jwt.component.JwtTokenProvider;
+import Babyak.babyak_backend.user.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,7 @@ public class ChatRoomController {
      */
 
     private final ChattingRoomRepository chattingRoomRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /* 채팅 리스트 화면 */
     @GetMapping("/room")
@@ -57,6 +62,17 @@ public class ChatRoomController {
         return chattingRoomRepository.findRoomById(roomId);
     }
 
+    /* 로그인 유저 정보 조회 */
+    @GetMapping("/user")
+    @ResponseBody
+    public UserInfoDto getUserInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        return UserInfoDto.builder()
+                .name(name)
+                .token(jwtTokenProvider.generateToken(name))
+                .build();
+    }
 //    private final SimpMessagingTemplate template;
 //
 //    @MessageMapping

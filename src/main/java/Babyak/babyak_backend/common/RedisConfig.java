@@ -22,13 +22,17 @@ public class RedisConfig {
 
     private final RedisProperties redisProperties;
 
+    /*
+    단일 topic 사용을 위한 Bean 설정
+     */
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
+    public ChannelTopic channelTopic() {
+        return new ChannelTopic("chatroom");
+
     }
 
-    /**
-     * redis pub/sub 메세지를 처리하는 listener 설정
+    /*
+    Redis에 발행(publish)된 메세지 처리를 위한 Listener 설정
      */
     @Bean
     public RedisMessageListenerContainer redisMessageListener (
@@ -42,14 +46,25 @@ public class RedisConfig {
         return container;
     }
 
+    /*
+    실제 메세지를 처리하는 subscriber 설정 추가
+     */
     @Bean
     public MessageListenerAdapter listenerAdapter(RedisSubscriber subscriber) {
-        return new MessageListenerAdapter(subscriber, "onMessage");
+        return new MessageListenerAdapter(subscriber, "sendMessage");
     }
+
+
+   @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
+    }
+
 
     /**
      * 어플리케이션에서 사용할 redisTemplate 설정
      */
+    /*
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -58,9 +73,6 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
         return redisTemplate;
     }
+     */
 
-    @Bean
-    public ChannelTopic channelTopic() {
-        return new ChannelTopic("chatroom");
-    }
 }
