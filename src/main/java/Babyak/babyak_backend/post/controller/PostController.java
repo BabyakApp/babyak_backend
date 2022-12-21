@@ -23,7 +23,6 @@ public class PostController {
     /* 글 작성 */
     @PostMapping
     public ResponseEntity<Void> createPost (@RequestBody PostRequest postRequest) {
-
         postService.creatPost(postRequest);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
@@ -31,7 +30,6 @@ public class PostController {
     /* 전체 글 목록 반환 */
     @GetMapping("/all")
     public ResponseEntity<List<PostResponse>> getAllPost() {
-
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAllPost());
     }
 }

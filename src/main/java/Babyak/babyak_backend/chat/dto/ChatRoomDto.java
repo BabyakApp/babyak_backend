@@ -24,6 +24,7 @@ public class ChatRoomDto implements Serializable {
 
     private String roomId;
     private String name; // 채팅방 이름
+    private Long userCount; // 채팅방 인원 수
 
     public static ChatRoomDto create(String name) {
         ChatRoomDto chatRoom = new ChatRoomDto();

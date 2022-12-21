@@ -3,6 +3,7 @@ package Babyak.babyak_backend.post.repository;
 import Babyak.babyak_backend.post.dto.PostResponse;
 
 import Babyak.babyak_backend.post.entity.Post;
+import Babyak.babyak_backend.post.entity.QPost;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,19 @@ public class PostQuerydslRepository {
 
     @PersistenceContext
     private EntityManager em;
+
+
+    @Transactional(readOnly = true)
+    public Post findByPostId(Long postId) {
+
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+
+        return jpaQueryFactory
+                .selectFrom(post)
+                .where(post.postId.eq(postId))
+                .fetchOne();
+
+    }
 
     @Transactional(readOnly = true)
     public List<PostResponse> findAllPost() {

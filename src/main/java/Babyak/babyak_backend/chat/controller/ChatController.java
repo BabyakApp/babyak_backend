@@ -2,13 +2,13 @@ package Babyak.babyak_backend.chat.controller;
 
 import Babyak.babyak_backend.chat.dto.ChatMessageDto;
 import Babyak.babyak_backend.chat.repository.ChattingRoomRepository;
+import Babyak.babyak_backend.chat.service.ChatService;
 import Babyak.babyak_backend.jwt.component.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 @RequiredArgsConstructor
@@ -32,6 +32,8 @@ public class ChatController {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
     private final ChannelTopic channelTopic;
+    private final ChatService chatService;
+    private final ChattingRoomRepository chattingRoomRepository;
 
     /**
      * websocket "/pub/chat/message" 로 들어오는 메세징을 처리한다.
@@ -40,15 +42,24 @@ public class ChatController {
     @MessageMapping("/chat/message")
     public void message(ChatMessageDto message, @Header("token") String token) {
         String nickname = jwtTokenProvider.getUserNameFromJwt(token);
+
+        // 로그인한 회원 정보로 대화명 설정
         message.setSender(nickname);
 
-        if (ChatMessageDto.MessageType.ENTER.equals(message.getType())) {
-            message.setSender("[알림]");
-            message.setMessage(nickname + "님이 입장하셨습니다.");
-        }
-        // Websocket에 발행된 메세지를 Redis로 발행한다(publish)
-        //sendingOperations.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
+        // 채팅방 인원수 설정
+        message.setUserCount(chattingRoomRepository.getUserCount(message.getRoomId()));
+
+        // WebSocket에 발행된 메세지를 redis로 발행 (-> redis publish)
+        chatService.sendChatMessage(message);
+
+//        // 채팅방 이방 시 대화명과 메세지 자동 세팅
+//        if (ChatMessageDto.MessageType.ENTER.equals(message.getType())) {
+//            message.setSender("[알림]");
+//            message.setMessage(nickname + "님이 입장하셨습니다.");
+//        }
+//        // Websocket에 발행된 메세지를 Redis로 발행한다(publish)
+//        //sendingOperations.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+//        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
     }
 
     /* 채팅방 생성 및 조회는 Rest API로 구현

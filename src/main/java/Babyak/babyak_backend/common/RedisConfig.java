@@ -64,7 +64,7 @@ public class RedisConfig {
     /**
      * 어플리케이션에서 사용할 redisTemplate 설정
      */
-    /*
+
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -73,6 +73,6 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
         return redisTemplate;
     }
-     */
+
 
 }

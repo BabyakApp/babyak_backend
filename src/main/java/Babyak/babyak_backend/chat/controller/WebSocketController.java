@@ -1,6 +1,7 @@
 package Babyak.babyak_backend.chat.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebSocketController {
 
 //
-//    private final SimpMessagingTemplate template;
+    private final SimpMessagingTemplate template;
 //
 //    // @MessageMapping: 메세지의 destination이 "/chat"이면 sendMessage() method 호출
 //    @MessageMapping(value = "/chat")

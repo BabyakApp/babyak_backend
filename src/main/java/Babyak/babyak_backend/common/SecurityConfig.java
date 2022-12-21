@@ -64,8 +64,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                     .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                     .antMatchers(HttpMethod.OPTIONS).permitAll()
-                    .antMatchers("/**").permitAll() // test용 -> 개발 다 하고 바꿔야됨
-                    //.antMatchers("/oauth/**").permitAll()
+                    //.antMatchers("/**").permitAll() // test용 -> 개발 다 하고 바꿔야됨
+                    .antMatchers("/oauth/**").permitAll()
                     //.antMatchers("/chat/**").hasRole("USER") // chat으로 시작하는 리소스에 대한 접근 권한 설정
                     .anyRequest().authenticated() // 나머지 리소스에 대한 접근 설정
                 .and()
