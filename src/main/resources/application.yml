@@ -5,11 +5,6 @@ spring:
 #    driver-class-name: org.h2.Driver
 #    username: sa
 
-  datasource:
-    url: jdbc:mariadb://3.36.207.252:3306/babyakDB
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: ewha
-    password: consysp
 
   jpa:
     hibernate:
@@ -20,7 +15,7 @@ spring:
         show_sql: true
 
   profiles:
-    include: oauth
+    include: oauth, db
 
   devtools:
     livereload:
