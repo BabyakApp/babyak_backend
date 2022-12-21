@@ -11,7 +11,6 @@ import lombok.*;
 public class ChatMessageDto {
 
     public ChatMessageDto() {
-
     }
 
     @Builder

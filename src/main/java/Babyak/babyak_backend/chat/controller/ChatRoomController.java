@@ -38,7 +38,10 @@ public class ChatRoomController {
     @GetMapping("/rooms")
     @ResponseBody
     public List<ChatRoomDto> room() {
-        return chattingRoomRepository.findAllRoom();
+        List<ChatRoomDto> chatRooms = chattingRoomRepository.findAllRoom();
+        chatRooms.stream()
+                .forEach(room -> room.setUserCount(chattingRoomRepository.getUserCount(room.getRoomId())));
+        return chatRooms;
     }
 
     /* 채팅방 생성 */
@@ -62,6 +65,7 @@ public class ChatRoomController {
         return chattingRoomRepository.findRoomById(roomId);
     }
 
+
     /* 로그인 유저 정보 조회 */
     @GetMapping("/user")
     @ResponseBody
@@ -73,6 +77,7 @@ public class ChatRoomController {
                 .token(jwtTokenProvider.generateToken(name))
                 .build();
     }
+
 //    private final SimpMessagingTemplate template;
 //
 //    @MessageMapping
