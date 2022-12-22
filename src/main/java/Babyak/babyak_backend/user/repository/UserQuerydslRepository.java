@@ -30,6 +30,18 @@ public class UserQuerydslRepository {
 
     }
 
+    @Transactional(readOnly = true)
+    public User findByNickname(String nickname) {
+
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+
+        return jpaQueryFactory
+                .selectFrom(user)
+                .where(user.nickname.eq(nickname))
+                .fetchOne();
+
+    }
+
     @Transactional
     public void updateNoShow(String email) {
 

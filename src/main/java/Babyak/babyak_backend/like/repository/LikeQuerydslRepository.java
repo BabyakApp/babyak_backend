@@ -22,23 +22,31 @@ public class LikeQuerydslRepository {
     private EntityManager em;
 
     @Transactional(readOnly = true)
-    public List<LikeListResponse> findLikeListByUserId (Long userId) {
+    public List<Long> findLikeListByEmail (String email) {
 
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
 
-        List<LikeListResponse> likeList = jpaQueryFactory
-                .select(Projections.fields(LikeListResponse.class,
-                        like.post.title,
-                        like.post.detail,
-                        like.post.numOfPeople.as("maxPeople"),
-                        like.post.meetingSite,
-                        like.post.preferredFood,
-                        like.post.meetingDate,
-                        like.post.meetingTime,
-                        like.post.nickname,
-                        like.post.major))
+//        List<LikeListResponse> likeList = jpaQueryFactory
+//                .select(Projections.fields(LikeListResponse.class,
+//                        like.post.title,
+//                        like.post.detail,
+//                        like.post.numOfPeople.as("maxPeople"),
+//                        like.post.meetingSite,
+//                        like.post.preferredFood,
+//                        like.post.meetingDate,
+//                        like.post.meetingTime,
+//                        like.post.nickname,
+//                        like.post.major))
+//                .from(like)
+//                .where(like.user.id.eq(userId))
+//                .groupBy(like.likeId)
+//                .orderBy(like.likeId.desc())
+//                .fetch();
+
+        List<Long> likeList = jpaQueryFactory
+                .select(like.postId)
                 .from(like)
-                .where(like.user.id.eq(userId))
+                .where(like.email.eq(email))
                 .groupBy(like.likeId)
                 .orderBy(like.likeId.desc())
                 .fetch();

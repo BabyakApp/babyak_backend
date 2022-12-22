@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -30,29 +31,33 @@ public class LikeService {
 
     @Transactional
     public void like (LikeRequest likeRequest) {
-        User user = userQuerydslRepository.findByEmail(likeRequest.getEmail());
-        Post post = postQuerydslRepository.findByPostId(likeRequest.getPostId());
+        //User user = userQuerydslRepository.findByEmail(likeRequest.getEmail());
+        //Post post = postQuerydslRepository.findByPostId(likeRequest.getPostId());
 
-        Like like = new Like(post, user);
+        Like like = new Like(likeRequest.getEmail(), likeRequest.getPostId());
 
         likeRepository.save(like);
     }
 
     @Transactional
     public void unlike (UnlikeRequest unlikeRequest) {
-        User user = userQuerydslRepository.findByEmail(unlikeRequest.getEmail());
-        Post post = postQuerydslRepository.findByPostId(unlikeRequest.getPostId());
+        //User user = userQuerydslRepository.findByEmail(unlikeRequest.getEmail());
+        //Post post = postQuerydslRepository.findByPostId(unlikeRequest.getPostId());
 
-        Like like = new Like(post, user);
+        Like like = new Like(unlikeRequest.getEmail(), unlikeRequest.getPostId());
 
         likeRepository.delete(like);
     }
 
     @Transactional(readOnly = true)
     public List<LikeListResponse> getLikeList (LikeListRequest likeListRequest) {
-        Long userId = userQuerydslRepository.findByEmail(likeListRequest.getEmail()).getId();
+        List<Long> postIdList = likeQuerydslRepository.findLikeListByEmail(likeListRequest.getEmail());
 
-        return likeQuerydslRepository.findLikeListByUserId(userId);
+        List<LikeListResponse> likeList = new ArrayList<>();
+        for (Long postId : postIdList) {
+            likeList.add(postQuerydslRepository.findLikeListByPostId(postId));
+        }
+        return likeList;
     }
 
 }

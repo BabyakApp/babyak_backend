@@ -19,3 +19,9 @@ CREATE TABLE BLOCK (
     userId INT,
     FOREIGN KEY (userId) REFERENCES USER(userId)
 );
+
+CREATE TABLE like (
+    likeId bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nickname varchar(255) NOT NULL,
+    postId bigint(20) NOT NULL
+);

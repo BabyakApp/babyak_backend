@@ -12,12 +12,25 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Data
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long likeId;
 
+    @Column
+    private String email;
+
+    @Column
+    private Long postId;
+
+    public Like (String email, Long postId) {
+        this.email = email;
+        this.postId = postId;
+    }
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
@@ -28,4 +41,5 @@ public class Like {
         this.post = post;
         this.user = user;
     }
+     */
 }

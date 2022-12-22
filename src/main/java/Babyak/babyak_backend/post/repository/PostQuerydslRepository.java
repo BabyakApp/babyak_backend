@@ -1,5 +1,6 @@
 package Babyak.babyak_backend.post.repository;
 
+import Babyak.babyak_backend.like.dto.LikeListResponse;
 import Babyak.babyak_backend.post.dto.PostResponse;
 
 import Babyak.babyak_backend.post.entity.Post;
@@ -35,6 +36,28 @@ public class PostQuerydslRepository {
                 .fetchOne();
 
     }
+
+    @Transactional(readOnly = true)
+    public LikeListResponse findLikeListByPostId (Long postId) {
+
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+
+        return jpaQueryFactory
+                .select(Projections.fields(LikeListResponse.class,
+                        post.title,
+                        post.detail,
+                        post.numOfPeople.as("maxPeople"),
+                        post.meetingSite,
+                        post.preferredFood,
+                        post.meetingDate,
+                        post.meetingTime,
+                        post.nickname,
+                        post.major))
+                .from(post)
+                .where(post.postId.eq(postId))
+                .fetchOne();
+    }
+
 
     @Transactional(readOnly = true)
     public List<PostResponse> findAllPost() {
