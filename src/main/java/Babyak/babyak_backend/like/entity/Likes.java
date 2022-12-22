@@ -1,7 +1,5 @@
 package Babyak.babyak_backend.like.entity;
 
-import Babyak.babyak_backend.post.entity.Post;
-import Babyak.babyak_backend.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,11 +11,11 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Data
-public class Like {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="like_id")
     private Long likeId;
 
     @Column
@@ -26,7 +24,7 @@ public class Like {
     @Column
     private Long postId;
 
-    public Like (String email, Long postId) {
+    public Likes(String email, Long postId) {
         this.email = email;
         this.postId = postId;
     }
@@ -37,7 +35,7 @@ public class Like {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public Like(Post post, User user) {
+    public Likes(Post post, User user) {
         this.post = post;
         this.user = user;
     }

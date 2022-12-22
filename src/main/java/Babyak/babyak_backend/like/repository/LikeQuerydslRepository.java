@@ -13,7 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-import static Babyak.babyak_backend.like.entity.QLike.like;
+import static Babyak.babyak_backend.like.entity.QLikes.likes;
+
 @Repository
 @RequiredArgsConstructor
 public class LikeQuerydslRepository {
@@ -44,11 +45,11 @@ public class LikeQuerydslRepository {
 //                .fetch();
 
         List<Long> likeList = jpaQueryFactory
-                .select(like.postId)
-                .from(like)
-                .where(like.email.eq(email))
-                .groupBy(like.likeId)
-                .orderBy(like.likeId.desc())
+                .select(likes.postId)
+                .from(likes)
+                .where(likes.email.eq(email))
+                .groupBy(likes.likeId)
+                .orderBy(likes.likeId.desc())
                 .fetch();
 
         return likeList;
